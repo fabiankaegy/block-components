@@ -9,6 +9,16 @@
   "scripts": {
     "lint:js": "10up-scripts lint-js"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "includes/**/*.js": [
+      "lint:js"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/10up/block-components.git"
@@ -29,8 +39,8 @@
   },
   "homepage": "https://github.com/10up/block-components.git#readme",
   "devDependencies": {
-    "@10up/scripts": "^1.0.11",
     "@10up/eslint-config": "^2.2.0",
+    "@10up/scripts": "^1.0.11",
     "@wordpress/eslint-plugin": "^7.4.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.2.0",
@@ -43,6 +53,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.0.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.2.1"
   }
 }
