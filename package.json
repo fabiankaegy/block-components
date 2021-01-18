@@ -15,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "includes/**/*.js": [
+    "**/*.js": [
       "lint:js"
     ]
   },
