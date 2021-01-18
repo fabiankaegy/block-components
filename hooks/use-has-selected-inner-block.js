@@ -8,9 +8,7 @@ import { useSelect } from '@wordpress/data';
  * @return {boolean} Whether or not a child block is selected
  */
 function hasSelectedInnerBlock(selectedBlock, clientId) {
-	const { innerBlocks } = useSelect((select) =>
-		select('core/block-editor').getBlock(clientId),
-	);
+	const { innerBlocks } = useSelect((select) => select('core/block-editor').getBlock(clientId));
 
 	let isChildSelected = false;
 
