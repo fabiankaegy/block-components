@@ -14,7 +14,11 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
+
+      - name: Install packages and build release file
+        run: |
+          npm ci
+          npm run build
       
       - name: Configure git user name and email
         run: |
