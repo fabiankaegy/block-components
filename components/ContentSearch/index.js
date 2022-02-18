@@ -3,15 +3,23 @@ import apiFetch from '@wordpress/api-fetch';
 import { useState, useRef, useEffect } from '@wordpress/element'; // eslint-disable-line
 import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
+import { jsx, css } from '@emotion/react';
 import SearchItem from './SearchItem';
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
 
 const NAMESPACE = 'tenup-content-search';
 
 const searchCache = {};
 
-const ContentSearch = ({ onSelectItem, placeholder, label, contentTypes, mode, excludeItems, perPage }) => {
+const ContentSearch = ({
+	onSelectItem,
+	placeholder,
+	label,
+	contentTypes,
+	mode,
+	excludeItems,
+	perPage,
+}) => {
 	const [searchString, setSearchString] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -135,31 +143,32 @@ const ContentSearch = ({ onSelectItem, placeholder, label, contentTypes, mode, e
 			setSearchResults(filterResults(searchCache[searchQuery]));
 			setIsLoading(false);
 		} else {
-
 			apiFetch({
 				path: searchQuery,
-				signal: abortControllerRef.current.signal
-			}).then((results) => {
-				if (mounted.current === false) {
-					return;
-				}
+				signal: abortControllerRef.current.signal,
+			})
+				.then((results) => {
+					if (mounted.current === false) {
+						return;
+					}
 
-				abortControllerRef.current = null;
-
-				const normalizedResults = normalizeResults(mode, results);
-				searchCache[searchQuery] = normalizedResults;
-
-				setSearchResults(filterResults(normalizedResults));
-
-				setIsLoading(false);
-			}).catch((error, code) => {
-				// fetch_error means the request was aborted
-				if (error.code !== 'fetch_error') {
-					setSearchResults([]);
 					abortControllerRef.current = null;
+
+					const normalizedResults = normalizeResults(mode, results);
+					searchCache[searchQuery] = normalizedResults;
+
+					setSearchResults(filterResults(normalizedResults));
+
 					setIsLoading(false);
-				}
-			});
+				})
+				.catch((error, code) => {
+					// fetch_error means the request was aborted
+					if (error.code !== 'fetch_error') {
+						setSearchResults([]);
+						abortControllerRef.current = null;
+						setIsLoading(false);
+					}
+				});
 		}
 	};
 
@@ -205,29 +214,30 @@ const ContentSearch = ({ onSelectItem, placeholder, label, contentTypes, mode, e
 							{__('Nothing found.', '10up-block-components')}
 						</li>
 					)}
-					{!isLoading && searchResults.map((item, index) => {
-						if (!item.title.length) {
-							return null;
-						}
+					{!isLoading &&
+						searchResults.map((item, index) => {
+							if (!item.title.length) {
+								return null;
+							}
 
-						return (
-							<li
-								key={item.id}
-								className={`${NAMESPACE}-list-item`}
-								style={{
-									marginBottom: '0',
-								}}
-							>
-								<SearchItem
-									onClick={() => handleItemSelection(item)}
-									searchTerm={searchString}
-									suggestion={item}
-									contentTypes={contentTypes}
-									isSelected={selectedItem === index + 1}
-								/>
-							</li>
-						);
-					})}
+							return (
+								<li
+									key={item.id}
+									className={`${NAMESPACE}-list-item`}
+									style={{
+										marginBottom: '0',
+									}}
+								>
+									<SearchItem
+										onClick={() => handleItemSelection(item)}
+										searchTerm={searchString}
+										suggestion={item}
+										contentTypes={contentTypes}
+										isSelected={selectedItem === index + 1}
+									/>
+								</li>
+							);
+						})}
 				</ul>
 			) : null}
 		</NavigableMenu>
@@ -253,7 +263,7 @@ ContentSearch.propTypes = {
 	placeholder: PropTypes.string,
 	excludeItems: PropTypes.array,
 	label: PropTypes.string,
-	perPage: PropTypes.number
+	perPage: PropTypes.number,
 };
 
 export { ContentSearch };

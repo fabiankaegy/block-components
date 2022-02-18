@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import { select } from '@wordpress/data';
 import { useState, useEffect, useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { v4 as uuidv4 } from 'uuid';
 import { ContentSearch } from '../ContentSearch';
 import SortableList from './SortableList';
-import { v4 as uuidv4 } from 'uuid';
 
 const NAMESPACE = '10up-content-picker';
 
@@ -56,7 +56,7 @@ const ContentPicker = ({
 	content: presetContent,
 	uniqueContentItems,
 	excludeCurrentPost,
-	perPage
+	perPage,
 }) => {
 	const [content, setContent] = useState(presetContent);
 
@@ -96,9 +96,8 @@ const ContentPicker = ({
 			return previousContent.filter(({ id, uuid }) => {
 				if (deletedItem.uuid) {
 					return uuid !== deletedItem.uuid;
-				} else {
-					return id !== deletedItem.id;
 				}
+				return id !== deletedItem.id;
 			});
 		});
 	};
@@ -108,7 +107,7 @@ const ContentPicker = ({
 
 		if (excludeCurrentPost && currentPostId) {
 			items.push({
-				id: currentPostId
+				id: currentPostId,
 			});
 		}
 
@@ -117,7 +116,7 @@ const ContentPicker = ({
 
 	return (
 		<div className={`${NAMESPACE}`}>
-			{(!content.length || (content.length && content.length < maxContentItems)) ? (
+			{!content.length || (content.length && content.length < maxContentItems) ? (
 				<ContentSearch
 					placeholder={placeholder}
 					label={label}
