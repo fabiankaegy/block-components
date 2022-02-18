@@ -1,14 +1,16 @@
 {
-  "name": "fabiankaegy-block-components-test",
+  "name": "fabiankaegy-block-components-fork",
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.0.1-next.1",
-  "description": "10up Components built for the WordPress Block Editor.",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "This is a non maintained fork used for testing",
+  "main": "./dist/index.js",
+  "source": "index.js",
   "scripts": {
     "lint": "10up-toolkit lint-js",
-    "test": "10up-toolkit test-unit-jest"
+    "test": "10up-toolkit test-unit-jest",
+    "build": "10up-toolkit build"
   },
   "repository": {
     "type": "git",
@@ -35,10 +37,29 @@
     "@wordpress/icons": "^6.1.1",
     "array-move": "^3.0.1",
     "prop-types": "^15.7.2",
-    "react-sortable-hoc": "^1.11.0",
+    "react-sortable-hoc": "^2.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "10up-toolkit": "^1.0.6"
+    "10up-toolkit": "^2.1.1"
+  },
+  "peerDependencies": {
+    "@wordpress/api-fetch": "^6.0.1",
+    "@wordpress/block-editor": "^8.1.1",
+    "@wordpress/blocks": "^11.2.1",
+    "@wordpress/components": "^19.4.0",
+    "@wordpress/compose": "^5.1.1",
+    "@wordpress/data": "^6.2.1",
+    "@wordpress/editor": "^12.2.0",
+    "@wordpress/element": "^4.1.1",
+    "@wordpress/hooks": "^3.3.1",
+    "@wordpress/html-entities": "^3.3.1",
+    "@wordpress/i18n": "^4.3.1",
+    "@wordpress/plugins": "^4.1.1",
+    "@wordpress/url": "^3.4.1",
+    "@wordpress/viewport": "^4.1.1"
+  },
+  "10up-toolkit": {
+    "libraryName": "@10up/block-components"
   }
 }
